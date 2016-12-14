@@ -8,7 +8,8 @@ from bs4 import BeautifulSoup
 
 from wargaming.exceptions import RequestError, ValidationError
 from wargaming.settings import (
-    ALLOWED_GAMES, ALLOWED_REGIONS, HTTP_USER_AGENT_HEADER, RETRY_COUNT, REGION_API_ENDPOINTS
+    ALLOWED_GAMES, ALLOWED_REGIONS, HTTP_USER_AGENT_HEADER, RETRY_COUNT, REGION_API_ENDPOINTS,
+    GAME_API_ENDPOINTS
 )
 
 
@@ -28,9 +29,9 @@ def region_url(region, game):
     check_allowed_game(game)
     check_allowed_region(region)
 
-    # all api calls for all project goes to api.worldoftanks.*
-    # maybe WG would move this api to api.wargaming.net
-    return '%s/%s/' % (REGION_API_ENDPOINTS[region], game)
+    url = 'https://%s.%s/%s/' % (GAME_API_ENDPOINTS[game].format(region),
+                                 REGION_API_ENDPOINTS[region], game)
+    return url
 
 
 @six.python_2_unicode_compatible

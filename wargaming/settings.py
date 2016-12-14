@@ -2,13 +2,23 @@ from wargaming.version import get_version
 
 ALLOWED_GAMES = ('wot', 'wgn', 'wows', 'wotb', 'wotx', 'wowp')
 
-ALLOWED_REGIONS = ('ru', 'asia', 'na', 'eu', 'kr')
+ALLOWED_REGIONS = ('ru', 'asia', 'na', 'eu', 'kr', 'xbox', 'ps4')
 REGION_API_ENDPOINTS = {
-    'ru': 'https://api.worldoftanks.ru',
-    'asia': 'https://api.worldoftanks.asia',
-    'na': 'https://api.worldoftanks.com',
-    'eu': 'https://api.worldoftanks.eu',
-    'kr': 'https://api.worldoftanks.kr',
+    'ru': 'ru',
+    'asia': 'asia',
+    'na': 'com',
+    'eu': 'eu',
+    'kr': 'kr',
+    'xbox': 'com',
+    'ps4': 'com'
+}
+GAME_API_ENDPOINTS = {
+    'wot': 'api.worldoftanks',
+    'wotb': 'api.wotblitz',
+    'wows': 'api.worldofwarships',
+    'wotx': 'api-{}-console.worldoftanks',
+    'wowp': 'api.worldofwarplanes',
+    'wgn': 'api.worldoftanks'
 }
 DEFAULT_REGION = 'ru'
 

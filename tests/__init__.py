@@ -4,8 +4,8 @@ import json
 from datetime import datetime
 from mock import patch, mock_open
 
-from wargaming import WoT, WGN, WoTB, WoWP, WoWS, settings
-from wargaming.meta import MetaAPI, BaseAPI, WGAPI
+from wargaming import WoT, WGN, WoTB, WoTX, WoWP, WoWS, settings
+from wargaming.meta import MetaAPI, BaseAPI, WGAPI, region_url
 from wargaming.settings import RETRY_COUNT, HTTP_USER_AGENT_HEADER
 from wargaming.exceptions import ValidationError, RequestError
 
@@ -75,6 +75,7 @@ class WargamingMetaTestCase(unittest.TestCase):
     ))
 
     @patch('wargaming.meta.ALLOWED_GAMES', ['demo'])
+    @patch('wargaming.meta.GAME_API_ENDPOINTS', {'demo': 'localhost'})
     @patch('wargaming.meta.open', open_schema)
     def setUp(self):
 
@@ -231,5 +232,22 @@ class WargamingTestCase(unittest.TestCase):
         WoT('demo', 'ru', 'ru')
         WGN('demo', 'ru', 'ru')
         WoTB('demo', 'ru', 'ru')
+        WoTX('demo', 'xbox', 'ru')
         WoWP('demo', 'ru', 'ru')
         WoWS('demo', 'ru', 'ru')
+
+    def test_api_endpoints(self):
+        wot_base_url = 'https://api.worldoftanks.ru/wot/'
+        self.assertEqual(wot_base_url, region_url('ru', 'wot'))
+        wgn_base_url = 'https://api.worldoftanks.ru/wgn/'
+        self.assertEqual(wgn_base_url, region_url('ru', 'wgn'))
+        wotb_base_url = 'https://api.wotblitz.ru/wotb/'
+        self.assertEqual(wotb_base_url, region_url('ru', 'wotb'))
+        wotx_base_url = 'https://api-xbox-console.worldoftanks.com/wotx/'
+        self.assertEqual(wotx_base_url, region_url('xbox', 'wotx'))
+        wotx_ps4_base_url = 'https://api-ps4-console.worldoftanks.com/wotx/'
+        self.assertEqual(wotx_ps4_base_url, region_url('ps4', 'wotx'))
+        wowp_base_url = 'https://api.worldofwarplanes.ru/wowp/'
+        self.assertEqual(wowp_base_url, region_url('ru', 'wowp'))
+        wows_base_url = 'https://api.worldofwarships.ru/wows/'
+        self.assertEqual(wows_base_url, region_url('ru', 'wows'))
